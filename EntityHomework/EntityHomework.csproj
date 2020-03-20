@@ -164,10 +164,6 @@
     <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\EntityHomeworkContext-20200319130836.mdf" />
-    <Content Include="App_Data\EntityHomeworkContext-20200319130836_log.ldf">
-      <DependentUpon>EntityHomeworkContext-20200319130836.mdf</DependentUpon>
-    </Content>
     <Content Include="bin\roslyn\csc.exe" />
     <Content Include="bin\roslyn\csi.exe" />
     <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
@@ -263,7 +259,9 @@
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

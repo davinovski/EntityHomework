@@ -14,9 +14,7 @@ namespace EntityHomework.Controllers
 {
     public class AuthorsController : Controller
     {
-        private static EntityHomeworkContext db = new EntityHomeworkContext();
-
-        private UnitOfWork UnitOfWork = new UnitOfWork(db);
+        private UnitOfWork UnitOfWork = new UnitOfWork();
 
         // GET: Authors
         public ActionResult Index()
@@ -78,7 +76,7 @@ namespace EntityHomework.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Author author)
+        public ActionResult Edit(int id,Author author)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +93,7 @@ namespace EntityHomework.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.Authors.Find(id);
+            Author author = UnitOfWork.Authors.Get(id);
             if (author == null)
             {
                 return HttpNotFound();
@@ -108,9 +106,8 @@ namespace EntityHomework.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Author author = db.Authors.Find(id);
-            db.Authors.Remove(author);
-            db.SaveChanges();
+            Author author = UnitOfWork.Authors.Get(id);
+            UnitOfWork.Authors.Remove(author);
             return RedirectToAction("Index");
         }
 

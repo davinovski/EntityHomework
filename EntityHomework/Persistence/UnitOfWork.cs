@@ -11,9 +11,9 @@ namespace EntityHomework.Persistence
     {
         private readonly EntityHomeworkContext _context;
 
-        public UnitOfWork(EntityHomeworkContext context)
+        public UnitOfWork()
         {
-            _context = context;
+            _context = new EntityHomeworkContext();
             Books = new BookRepository(_context);
             Authors = new AuthorRepository(_context);
         }

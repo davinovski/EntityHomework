@@ -28,7 +28,6 @@ namespace EntityHomework.Persistence
             book.Description = entity.Description;
             book.Count = entity.Count;
             book.AuthorId = entity.AuthorId;
-            book.Author = entity.Author;
 
             Context.SaveChanges();
             return book;

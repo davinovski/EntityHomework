@@ -14,14 +14,14 @@ namespace EntityHomework.Controllers
 {
     public class BooksController : Controller
     {
-        private static EntityHomeworkContext db = new EntityHomeworkContext();
 
-        private UnitOfWork UnitOfWork = new UnitOfWork(db);
+        private UnitOfWork UnitOfWork = new UnitOfWork();
 
         // GET: Books
         public ActionResult Index(string SearchString = "")
         {
             List<Book> Books = UnitOfWork.Books.GetAll().ToList();
+            
             if (!SearchString.Equals(""))
             {
                 Books = Books.Where(b => b.Name.ToLower().Contains(SearchString.ToLower()) || b.Author.Name.ToLower().Contains(SearchString.ToLower())).ToList();
@@ -49,7 +49,7 @@ namespace EntityHomework.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "Name");
+            ViewBag.AuthorId = new SelectList(UnitOfWork.Authors.GetAll().ToList(), "Id", "Name");
             return View();
         }
 
@@ -62,12 +62,11 @@ namespace EntityHomework.Controllers
         {
             if (ModelState.IsValid)
             {
-                book.Author = UnitOfWork.Authors.Get(book.AuthorId);
                 UnitOfWork.Books.Add(book);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "Name", book.AuthorId);
+            ViewBag.AuthorId = new SelectList(UnitOfWork.Authors.GetAll(), "Id", "Name", book.AuthorId);
             return View(book);
         }
 
@@ -78,7 +77,7 @@ namespace EntityHomework.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = UnitOfWork.Books.Get(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -97,7 +96,7 @@ namespace EntityHomework.Controllers
             
             if (ModelState.IsValid)
             {
-                book.Author = UnitOfWork.Authors.Get(book.AuthorId);
+
                 UnitOfWork.Books.Update(id, book);
                 return RedirectToAction("Index");
             }
@@ -112,7 +111,7 @@ namespace EntityHomework.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = UnitOfWork.Books.Get(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -125,9 +124,8 @@ namespace EntityHomework.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book book = db.Books.Find(id);
-            db.Books.Remove(book);
-            db.SaveChanges();
+            Book book = UnitOfWork.Books.Get(id);
+            UnitOfWork.Books.Remove(book);
             return RedirectToAction("Index");
         }
 

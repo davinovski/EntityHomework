@@ -10,7 +10,6 @@ namespace EntityHomework.Models
     public class Author
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -21,7 +20,7 @@ namespace EntityHomework.Models
 
         public Author()
         {
-
+            Books = new List<Book>();
         }
 
         public Author(string name, ICollection<Book> books)
