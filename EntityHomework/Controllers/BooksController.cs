@@ -19,9 +19,14 @@ namespace EntityHomework.Controllers
         private UnitOfWork UnitOfWork = new UnitOfWork(db);
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(string SearchString = "")
         {
-            List<Book> Books = UnitOfWork.Books.GetAll().ToList(); ;
+            List<Book> Books = UnitOfWork.Books.GetAll().ToList();
+            if (!SearchString.Equals(""))
+            {
+                Books = Books.Where(b => b.Name.ToLower().Contains(SearchString.ToLower()) || b.Author.Name.ToLower().Contains(SearchString.ToLower())).ToList();
+            }
+            
             return View(Books);
         }
 

@@ -23,7 +23,14 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Books", "Index", "Books")</li>
                     <li>@Html.ActionLink("Authors", "Index", "Authors")</li>
+                    <li>
+                    </li>
                 </ul>
+                @using (Html.BeginForm("Index", "Books", FormMethod.Get, new { @class = "form-inline text-right",style="margin-top:7px" }))
+                {
+                    <input type="text" name="SearchString" class="form-control" style="width:300px;" placeholder="Search by Title or Author Name">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                }
             </div>
         </div>
     </div>
