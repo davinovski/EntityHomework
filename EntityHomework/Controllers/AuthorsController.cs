@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using EntityHomework.Data;
 using EntityHomework.Models;
-using EntityHomework.ViewModels;
 using EntityHomework.Persistence;
 
 namespace EntityHomework.Controllers
